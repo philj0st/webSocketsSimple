@@ -1,3 +1,20 @@
+
+$( "div" ).mousemove(function( event ) {
+  var pageCoords = "( " + event.pageX + ", " + event.pageY + " )";
+  var clientCoords = "( " + event.clientX + ", " + event.clientY + " )";
+  $( "span:first" ).text( "( event.pageX, event.pageY ) : " + pageCoords );
+  $( "span:last" ).text( "( event.clientX, event.clientY ) : " + clientCoords );
+  
+
+  console.log(event);
+  var msg = {
+		type: 'updatePos',
+		data: [event.pageX, event.pageY],
+		date: Date.now()
+	}
+	connection.send(JSON.stringify(msg));
+});
+
 //globals
 var socketServerURL = "ws://localhost:8080";
 var connection = new WebSocket(socketServerURL);

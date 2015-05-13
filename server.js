@@ -59,6 +59,11 @@ wsServer.on('request', function(request) {
     			var msg = {type:'updateMessage', data:msg.data, date:Date.now()};
     			toAllClients(msg);
     			console.log('message forwarded: ' + msg.data);
+    			break;
+
+    		case 'updatePos':
+    			console.log('client' + client.indexOf(connection) + ' position update: [x:' + msg.data[0] 
+    			+ '/y:' + msg.data[1] + ']');
     	}
 
         // if (message.type === 'utf8') {
