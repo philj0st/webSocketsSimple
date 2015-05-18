@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 //dependencies
-var WebSocketServer = require('D:/tmp/tarballs/unzipped/WebSocket-Node-master/index.js').server;
+var WebSocketServer = require('websocket').server;
 var http = require('http');
 
 var server = http.createServer(function(request, response) {

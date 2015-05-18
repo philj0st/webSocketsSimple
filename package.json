@@ -1,0 +1,25 @@
+{
+  "name": "webSocketsSimple",
+  "version": "0.0.0",
+  "description": "playing around with webSockets",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phipix01/webSocketsSimple.git"
+  },
+  "keywords": [
+    "webSockets"
+  ],
+  "author": "Philipp Jost",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/phipix01/webSocketsSimple/issues"
+  },
+  "dependencies": {
+    "websocket": "~1.0.18"
+  }
+}
