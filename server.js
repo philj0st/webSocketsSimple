@@ -49,7 +49,7 @@ wsServer.on('request', function(request) {
 
     	switch(msg.type){
     		case 'join':
-    			userlist.push(msg.data);
+    			userlist[client.indexOf(connection)] = msg.data;
     			var msg = {type:'updateUserlist', data:userlist, date:Date.now()};
     			toAllClients(msg);
     			console.log(msg.data + 'joined');
@@ -65,17 +65,6 @@ wsServer.on('request', function(request) {
     			console.log('client' + client.indexOf(connection) + ' position update: [x:' + msg.data[0] 
     			+ '/y:' + msg.data[1] + ']');
     	}
-
-        // if (message.type === 'utf8') {
-        //     console.log('Received Message: ' + message.utf8Data);
-        //     connection.sendUTF(message.utf8Data);
-        //     var obj = JSON.parse(message.utf8Data);
-        //     console.log(obj.data);
-        // }
-        // else if (message.type === 'binary') {
-        //     console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-        //     connection.sendBytes(message.binaryData);
-        // }
     });
     connection.on('close', function(reasonCode, description) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
