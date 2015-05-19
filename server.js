@@ -13,7 +13,7 @@ var server = http.createServer(function(request, response) {
 //heroku dynamically assigns ports so we have to listen to process.env.PORT
 //http://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 server.listen(process.env.PORT || 5000, function() {
-    console.log((new Date()) + ' Server is listening on port 8080');
+    console.log((new Date()) + ' Server is listening on port' + process.env.PORT);
 });
 
 wsServer = new WebSocketServer({
