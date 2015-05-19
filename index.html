@@ -5,6 +5,10 @@
   <meta charset="utf-8">
   <title>webSocketSimple</title>
   <style>
+
+  div{
+    cursor: url("./icons/1.png"), auto;
+  }
   p {
     margin: 0;
     margin-left: 10px;
@@ -19,12 +23,18 @@
     display: block;
   }
   div{
-  	width: 500px;
-    height: 500px;
+    background-image: url("./img/map.jpg");
+    width:881px;
+    height: 736px;
     margin: 10px 50px 10px 10px;
-    background: aqua;
     border: 2px groove;
     float: center;
+  }
+  #userlist{
+    float:right;
+  }
+  img{
+    position: absolute;
   }
   </style>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -35,6 +45,9 @@
   <span>Move the mouse over the div.</span>
   <span>&nbsp;</span>
 </p>
+<ul id="userlist">
+  <li>no userlist present</li>
+</ul>
 <script src="client.js" type="text/javascript"></script>
 </body>
 </html>
