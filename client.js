@@ -17,7 +17,7 @@ $( "div" ).mousemove(function( event ) {
 });
 
 //globals
-var socketServerURL = "ws://localhost:8080";
+var socketServerURL = "wss://websocket-phil.herokuapp.com";
 var connection = new WebSocket(socketServerURL);
 
 connection.onopen = function () {
