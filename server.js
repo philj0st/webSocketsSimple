@@ -30,9 +30,17 @@ function originIsAllowed(origin) {
 }
 
 function toAllClients(msg){
-	for (var i = 0; i < client.length; i++) {
-		client[i].sendUTF(JSON.stringify(msg));
-	};
+    for (var i = 0; i < client.length; i++) {
+        client[i].sendUTF(JSON.stringify(msg));
+    };
+}
+
+function toAllCientsExceptSender (msg, senderId) {
+    for (var i = 0; i < client.length; i++) {
+        if (i != senderId) {
+            client[i].sendUTF(JSON.stringify(msg));
+        };
+    };
 }
 
 wsServer.on('request', function(request) {
@@ -47,26 +55,42 @@ wsServer.on('request', function(request) {
     client.push(connection);
     console.log((new Date()) + ' Connection accepted.');
     connection.on('message', function(message) {
-    	var msg = JSON.parse(message.utf8Data);
+        var msg = JSON.parse(message.utf8Data);
 
-    	switch(msg.type){
-    		case 'join':
-    			userlist[client.indexOf(connection)] = msg.data;
-    			var msg = {type:'updateUserlist', data:userlist, date:Date.now()};
-    			toAllClients(msg);
-    			console.log(msg.data + 'joined');
-    		break;
+        switch(msg.type){
+            case 'join':
+                userlist[client.indexOf(connection)] = msg.data;
+                var msg = {type:'updateUserlist', data:userlist, date:Date.now()};
+                toAllClients(msg);
+                console.log(msg.data + 'joined');
+            break;
 
-    		case 'message':
-    			var msg = {type:'updateMessage', data:msg.data, date:Date.now()};
-    			toAllClients(msg);
-    			console.log('message forwarded: ' + msg.data);
-    			break;
+            case 'message':
+                var msg = {type:'message', data:msg.data, date:Date.now()};
+                toAllClients(msg);
+                console.log('message forwarded: ' + msg.data);
+                break;
 
-    		case 'updatePos':
-    			console.log('client' + client.indexOf(connection) + ' position update: [x:' + msg.data[0] 
-    			+ '/y:' + msg.data[1] + ']');
-    	}
+            //send the new position to every client except the sender itself
+            case 'updatePos':
+
+                var msg = {type:'updatePos', data:msg.data, date:Date.now()};
+                msg.data[2] = client.indexOf(connection);
+
+                /*example
+                {
+                    type:'updatePos',
+                    data:[x:152, y:632, id:3],
+                    date:123412323    
+                }
+                */
+
+                console.log('client' + msg.data[2] + ' position update: [x:' + msg.data[0] 
+                + '/y:' + msg.data[1] + ']');
+                
+                toAllCientsExceptSender(msg, msg.data.id);
+                break;
+        }
     });
     connection.on('close', function(reasonCode, description) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
